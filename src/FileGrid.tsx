@@ -29,6 +29,10 @@ export function isDirectory(file: FileItem) {
   return file.httpMetadata?.contentType === "application/x-directory";
 }
 
+export function isImage(file: FileItem) {
+  return /^image\//.test(file.httpMetadata?.contentType || "");
+}
+
 function FileGrid({
   files,
   onCwdChange,
@@ -55,12 +59,13 @@ function FileGrid({
                 onMultiSelect(file.key);
               } else if (isDirectory(file)) {
                 onCwdChange(file.key + "/");
-              } else
+              } else {
                 window.open(
                   `/webdav/${encodeKey(file.key)}`,
                   "_blank",
                   "noopener,noreferrer"
                 );
+              }
             }}
             onContextMenu={(e) => {
               e.preventDefault();
@@ -74,6 +79,13 @@ function FileGrid({
                   src={`/webdav/_$flaredrive$/thumbnails/${file.customMetadata.thumbnail}.png`}
                   alt={file.key}
                   style={{ width: 36, height: 36, objectFit: "cover" }}
+                />
+              ) : isImage(file) ? (
+                <img
+                  src={`/webdav/${encodeKey(file.key)}`}
+                  alt={extractFilename(file.key)}
+                  style={{ width: 36, height: 36, objectFit: "cover" }}
+                  loading="lazy"
                 />
               ) : (
                 <MimeIcon contentType={file.httpMetadata.contentType} />

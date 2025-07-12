@@ -29,8 +29,8 @@ export function isDirectory(file: FileItem) {
   return file.httpMetadata?.contentType === "application/x-directory";
 }
 
-export function isImage(file: FileItem) {
-  return /^image\//.test(file.httpMetadata?.contentType || "");
+function isImage(contentType?: string) {
+  return contentType?.startsWith("image/");
 }
 
 function FileGrid({
@@ -49,73 +49,108 @@ function FileGrid({
   return files.length === 0 ? (
     emptyMessage
   ) : (
-    <Grid container sx={{ paddingBottom: "48px" }}>
-      {files.map((file) => (
-        <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
-          <ListItemButton
-            selected={multiSelected?.includes(file.key)}
-            onClick={() => {
-              if (multiSelected !== null) {
-                onMultiSelect(file.key);
-              } else if (isDirectory(file)) {
-                onCwdChange(file.key + "/");
-              } else {
-                window.open(
-                  `/webdav/${encodeKey(file.key)}`,
-                  "_blank",
-                  "noopener,noreferrer"
-                );
-              }
-            }}
-            onContextMenu={(e) => {
-              e.preventDefault();
-              onMultiSelect(file.key);
-            }}
-            sx={{ userSelect: "none" }}
-          >
-            <ListItemIcon>
-              {file.customMetadata?.thumbnail ? (
-                <img
-                  src={`/webdav/_$flaredrive$/thumbnails/${file.customMetadata.thumbnail}.png`}
-                  alt={file.key}
-                  style={{ width: 36, height: 36, objectFit: "cover" }}
-                />
-              ) : isImage(file) ? (
-                <img
-                  src={`/webdav/${encodeKey(file.key)}`}
-                  alt={extractFilename(file.key)}
-                  style={{ width: 36, height: 36, objectFit: "cover" }}
-                  loading="lazy"
-                />
-              ) : (
-                <MimeIcon contentType={file.httpMetadata.contentType} />
-              )}
-            </ListItemIcon>
-            <ListItemText
-              primary={extractFilename(file.key)}
-              primaryTypographyProps={{
-                whiteSpace: "nowrap",
+    <Grid container spacing={2} sx={{ paddingBottom: "48px" }}>
+      {files.map((file) => {
+        const isImg = isImage(file.httpMetadata.contentType);
+        const previewSrc = file.customMetadata?.thumbnail
+          ? `/webdav/_$flaredrive$/thumbnails/${file.customMetadata.thumbnail}.png`
+          : isImg
+          ? `/webdav/${encodeKey(file.key)}`
+          : null;
+
+        return (
+          <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
+            <Box
+              sx={{
+                border: 1,
+                borderColor: "divider",
+                borderRadius: 1,
                 overflow: "hidden",
-                textOverflow: "ellipsis",
               }}
-              secondary={
-                <React.Fragment>
+            >
+              <ListItemButton
+                selected={multiSelected?.includes(file.key)}
+                onClick={() => {
+                  if (multiSelected !== null) {
+                    onMultiSelect(file.key);
+                  } else if (isDirectory(file)) {
+                    onCwdChange(file.key + "/");
+                  } else {
+                    window.open(
+                      `/webdav/${encodeKey(file.key)}`,
+                      "_blank",
+                      "noopener,noreferrer"
+                    );
+                  }
+                }}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  onMultiSelect(file.key);
+                }}
+                sx={{
+                  userSelect: "none",
+                  flexDirection: "column",
+                  alignItems: "stretch",
+                  padding: 0,
+                }}
+              >
+                {previewSrc ? (
+                  <Box
+                    component="img"
+                    src={previewSrc}
+                    alt={extractFilename(file.key)}
+                    sx={{
+                      width: "100%",
+                      height: 140,
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                ) : (
                   <Box
                     sx={{
-                      display: "inline-block",
-                      minWidth: "160px",
-                      marginRight: 1,
+                      height: 140,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    {new Date(file.uploaded).toLocaleString()}
+                    <MimeIcon
+                      contentType={file.httpMetadata.contentType}
+                      sx={{ fontSize: 48 }}
+                    />
                   </Box>
-                  {!isDirectory(file) && humanReadableSize(file.size)}
-                </React.Fragment>
-              }
-            />
-          </ListItemButton>
-        </Grid>
-      ))}
+                )}
+
+                <Box sx={{ p: 1 }}>
+                  <ListItemText
+                    primary={extractFilename(file.key)}
+                    primaryTypographyProps={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    secondary={
+                      <React.Fragment>
+                        <Box
+                          sx={{
+                            display: "inline-block",
+                            minWidth: "160px",
+                            marginRight: 1,
+                          }}
+                        >
+                          {new Date(file.uploaded).toLocaleString()}
+                        </Box>
+                        {!isDirectory(file) && humanReadableSize(file.size)}
+                      </React.Fragment>
+                    }
+                  />
+                </Box>
+              </ListItemButton>
+            </Box>
+          </Grid>
+        );
+      })}
     </Grid>
   );
 }

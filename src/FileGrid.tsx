@@ -115,10 +115,7 @@ function FileGrid({
                       justifyContent: "center",
                     }}
                   >
-                    <MimeIcon
-                      contentType={file.httpMetadata.contentType}
-                      sx={{ fontSize: 48 }}
-                    />
+                    <MimeIcon contentType={file.httpMetadata.contentType} />
                   </Box>
                 )}
 

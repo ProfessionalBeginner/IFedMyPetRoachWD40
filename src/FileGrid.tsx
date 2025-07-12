@@ -101,7 +101,7 @@ function FileGrid({
                     alt={extractFilename(file.key)}
                     sx={{
                       width: "100%",
-                      height: 140,
+                      height: 300,
                       objectFit: "cover",
                       display: "block",
                     }}
@@ -109,7 +109,7 @@ function FileGrid({
                 ) : (
                   <Box
                     sx={{
-                      height: 140,
+                      height: 300,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -132,7 +132,7 @@ function FileGrid({
                         <Box
                           sx={{
                             display: "inline-block",
-                            minWidth: "160px",
+                            minWidth: "300px",
                             marginRight: 1,
                           }}
                         >

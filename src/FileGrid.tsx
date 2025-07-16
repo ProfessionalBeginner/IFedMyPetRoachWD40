@@ -3,7 +3,7 @@ import {
   Box,
   Grid,
   ListItemButton,
-  ListItemIcon,
+  // ListItemIcon,
   ListItemText,
 } from "@mui/material";
 import MimeIcon from "./MimeIcon";

@@ -115,7 +115,7 @@ function FileGrid({
                         height: "100%",
                         objectFit: "cover",
                         display: "block",
-                        backgroundColor: "transparent",
+                        backgroundColor: "#143880ff",
                       }}
                     />
                   </Box>

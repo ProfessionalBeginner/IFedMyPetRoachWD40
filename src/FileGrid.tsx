@@ -49,7 +49,7 @@ function FileGrid({
   return files.length === 0 ? (
     emptyMessage
   ) : (
-    <Grid container spacing={2} sx={{ paddingBottom: "48px" }}>
+    <Grid container spacing={2} sx={{ paddingBottom: "48px", backgroundColor: "#e3f2fd", minHeight: "100vh" }}>
       {files.map((file) => {
         const isImg = isImage(file.httpMetadata.contentType);
         const previewSrc = file.customMetadata?.thumbnail
@@ -98,12 +98,11 @@ function FileGrid({
                   <Box
                     sx={{
                       width: "100%",
+                      height: 220,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      backgroundColor: "#e3f2fd", // soft light blue
-                      minHeight: 100,
-                      maxHeight: 400,
+                      backgroundColor: "white",
                       overflow: "hidden",
                     }}
                   >
@@ -112,12 +111,10 @@ function FileGrid({
                       src={previewSrc}
                       alt={extractFilename(file.key)}
                       sx={{
-                        maxWidth: "100%",
-                        maxHeight: 400,
-                        width: "auto",
-                        height: "auto",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
                         display: "block",
-                        margin: "auto",
                         backgroundColor: "transparent",
                       }}
                     />
@@ -125,12 +122,12 @@ function FileGrid({
                 ) : (
                   <Box
                     sx={{
-                      minHeight: 100,
-                      maxHeight: 400,
+                      width: "100%",
+                      height: 220,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      backgroundColor: "#e3f2fd", // soft light blue
+                      backgroundColor: "white",
                     }}
                   >
                     <MimeIcon contentType={file.httpMetadata.contentType} />

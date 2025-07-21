@@ -96,23 +96,41 @@ function FileGrid({
               >
                 {previewSrc ? (
                   <Box
-                    component="img"
-                    src={previewSrc}
-                    alt={extractFilename(file.key)}
                     sx={{
                       width: "100%",
-                      height: 300,
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                  />
-                ) : (
-                  <Box
-                    sx={{
-                      height: 300,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      backgroundColor: "#e3f2fd", // soft light blue
+                      minHeight: 100,
+                      maxHeight: 400,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={previewSrc}
+                      alt={extractFilename(file.key)}
+                      sx={{
+                        maxWidth: "100%",
+                        maxHeight: 400,
+                        width: "auto",
+                        height: "auto",
+                        display: "block",
+                        margin: "auto",
+                        backgroundColor: "transparent",
+                      }}
+                    />
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      minHeight: 100,
+                      maxHeight: 400,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "#e3f2fd", // soft light blue
                     }}
                   >
                     <MimeIcon contentType={file.httpMetadata.contentType} />

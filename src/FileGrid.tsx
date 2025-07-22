@@ -73,7 +73,9 @@ function FileGrid({
               sx={{
                 border: 1,
                 borderColor: "#54c0cb",
-                backgroundColor: "#77867e",
+                backgroundColor: "#081135",
+                color: "#54c0cb",
+                FontFace: "Roboto, sans-serif",
                 borderRadius: 1,
                 overflow: "hidden",
               }}
@@ -113,9 +115,9 @@ function FileGrid({
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      textColor: "#d3e1f5ff",
+                      textColor: "#54c0cb",
                       backgroundColor: "#4a90e2",
-                      color: "#d3e1f5ff",
+                      color: "#54c0cb",
                       overflow: "hidden",
                     }}
                   >

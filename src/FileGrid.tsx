@@ -1,5 +1,11 @@
 import React from "react";
-import { Box, Grid, ListItemButton, ListItemText } from "@mui/material";
+import {
+  Box,
+  Grid,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import MimeIcon from "./MimeIcon";
 import { humanReadableSize } from "./app/utils";
 import RomanticIcon from "./RomanticIcon";
@@ -49,10 +55,10 @@ function FileGrid({
         maxHeight: "100vh",
         overflowY: "auto",
         scrollBehavior: "smooth",
-        paddingBottom: "48px",
-        backgroundColor: "#e3f2fd",
-        willChange: "transform",
-        backfaceVisibility: "hidden",
+        backgroundColor: "#0a0e1a",
+        p: 2,
+        fontFamily: '"Share Tech Mono", monospace',
+        color: "#8be9fd",
       }}
     >
       <Grid container spacing={2}>
@@ -68,16 +74,16 @@ function FileGrid({
             <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
               <Box
                 sx={{
-                  border: 1,
-                  borderColor: "divider",
-                  backgroundColor: "#143880ff",
-                  borderRadius: 1,
-                  overflow: "hidden",
-                  transition: "transform 0.2s ease, box-shadow 0.3s ease",
+                  border: "1px solid #00caff",
+                  background: "linear-gradient(to bottom, #0e1a2b, #08111f)",
+                  borderRadius: "8px",
+                  boxShadow: "0 0 12px #00e5ff66",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
                   "&:hover": {
                     transform: "scale(1.02)",
-                    boxShadow: 3,
+                    boxShadow: "0 0 18px #00ffffaa",
                   },
+                  overflow: "hidden",
                 }}
               >
                 <ListItemButton
@@ -110,12 +116,10 @@ function FileGrid({
                     <Box
                       sx={{
                         width: "100%",
-                        height: 220,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: "#4a90e2",
+                        height: 200,
+                        backgroundColor: "#06101a",
                         overflow: "hidden",
+                        position: "relative",
                       }}
                     >
                       <Box
@@ -127,8 +131,7 @@ function FileGrid({
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
-                          display: "block",
-                          backgroundColor: "#c5d4f1ff",
+                          filter: "brightness(0.8) contrast(1.1)",
                         }}
                       />
                     </Box>
@@ -136,40 +139,55 @@ function FileGrid({
                     <Box
                       sx={{
                         width: "100%",
-                        height: 220,
+                        height: 200,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: "white",
+                        background: "#07111e",
                       }}
                     >
-                      <MimeIcon contentType={file.httpMetadata.contentType} />
+                      <MimeIcon
+                        contentType={file.httpMetadata.contentType}
+                        sx={{
+                          fontSize: 48,
+                          color: "#00eaff",
+                          filter: "drop-shadow(0 0 4px #00eaff88)",
+                        }}
+                      />
                     </Box>
                   )}
 
-                  <Box sx={{ p: 1 }}>
-                    <ListItemText
-                      primary={extractFilename(file.key)}
-                      primaryTypographyProps={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
+                  <Box
+                    sx={{
+                      px: 1,
+                      py: 1.5,
+                      textAlign: "center",
+                      borderTop: "1px solid #00caff44",
+                      backgroundColor: "#0e1a2b",
+                    }}
+                  >
+                    <Typography
+                      noWrap
+                      sx={{
+                        fontSize: "0.9rem",
+                        color: "#8be9fd",
+                        textShadow: "0 0 4px #00eaff55",
                       }}
-                      secondary={
-                        <React.Fragment>
-                          <Box
-                            sx={{
-                              display: "inline-block",
-                              minWidth: "300px",
-                              marginRight: 1,
-                            }}
-                          >
-                            {new Date(file.uploaded).toLocaleString()}
-                          </Box>
-                          {!isDirectory(file) && humanReadableSize(file.size)}
-                        </React.Fragment>
-                      }
-                    />
+                    >
+                      {extractFilename(file.key)}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#44e0ffaa",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      {new Date(file.uploaded).toLocaleString()}
+                      {!isDirectory(file)
+                        ? ` • ${humanReadableSize(file.size)}`
+                        : ""}
+                    </Typography>
                   </Box>
                 </ListItemButton>
               </Box>

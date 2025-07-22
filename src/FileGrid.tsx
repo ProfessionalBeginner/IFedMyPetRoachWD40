@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import MimeIcon from "./MimeIcon";
 import { humanReadableSize } from "./app/utils";
+import RomanticIcon from "./RomanticIcon";
 
 export interface FileItem {
   key: string;
@@ -49,7 +50,15 @@ function FileGrid({
   return files.length === 0 ? (
     emptyMessage
   ) : (
-    <Grid container spacing={2} sx={{ paddingBottom: "48px", backgroundColor: "#e3f2fd", minHeight: "100vh" }}>
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        paddingBottom: "48px",
+        backgroundColor: "#e3f2fd",
+        minHeight: "100vh",
+      }}
+    >
       {files.map((file) => {
         const isImg = isImage(file.httpMetadata.contentType);
         const previewSrc = file.customMetadata?.thumbnail
@@ -82,6 +91,7 @@ function FileGrid({
                       "noopener,noreferrer"
                     );
                   }
+                  <RomanticIcon />;
                 }}
                 onContextMenu={(e) => {
                   e.preventDefault();
@@ -102,7 +112,7 @@ function FileGrid({
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      backgroundColor: "white",
+                      backgroundColor: "#143880ff",
                       overflow: "hidden",
                     }}
                   >
@@ -115,7 +125,7 @@ function FileGrid({
                         height: "100%",
                         objectFit: "cover",
                         display: "block",
-                        backgroundColor: "#143880ff",
+                        backgroundColor: "#c5d4f1ff",
                       }}
                     />
                   </Box>

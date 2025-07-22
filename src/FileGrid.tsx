@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Grid,
-  ListItemButton,
-  // ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Box, Grid, ListItemButton, ListItemText } from "@mui/material";
 import MimeIcon from "./MimeIcon";
 import { humanReadableSize } from "./app/utils";
 import RomanticIcon from "./RomanticIcon";
@@ -50,132 +44,140 @@ function FileGrid({
   return files.length === 0 ? (
     emptyMessage
   ) : (
-    <Grid
-      container
-      spacing={2}
+    <Box
       sx={{
+        maxHeight: "100vh",
+        overflowY: "auto",
+        scrollBehavior: "smooth",
         paddingBottom: "48px",
         backgroundColor: "#e3f2fd",
-        minHeight: "100vh",
+        willChange: "transform",
+        backfaceVisibility: "hidden",
       }}
     >
-      {files.map((file) => {
-        const isImg = isImage(file.httpMetadata.contentType);
-        const previewSrc = file.customMetadata?.thumbnail
-          ? `/webdav/_$flaredrive$/thumbnails/${file.customMetadata.thumbnail}.png`
-          : isImg
-          ? `/webdav/${encodeKey(file.key)}`
-          : null;
+      <Grid container spacing={2}>
+        {files.map((file) => {
+          const isImg = isImage(file.httpMetadata.contentType);
+          const previewSrc = file.customMetadata?.thumbnail
+            ? `/webdav/_$flaredrive$/thumbnails/${file.customMetadata.thumbnail}.png`
+            : isImg
+            ? `/webdav/${encodeKey(file.key)}`
+            : null;
 
-        return (
-          <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
-            <Box
-              sx={{
-                border: 1,
-                borderColor: "divider",
-                backgroundColor: "#143880ff",
-                borderRadius: 1,
-                overflow: "hidden",
-              }}
-            >
-              <ListItemButton
-                selected={multiSelected?.includes(file.key)}
-                onClick={() => {
-                  if (multiSelected !== null) {
-                    onMultiSelect(file.key);
-                  } else if (isDirectory(file)) {
-                    onCwdChange(file.key + "/");
-                  } else {
-                    window.open(
-                      `/webdav/${encodeKey(file.key)}`,
-                      "_blank",
-                      "noopener,noreferrer"
-                    );
-                  }
-                  <RomanticIcon />;
-                }}
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  onMultiSelect(file.key);
-                }}
+          return (
+            <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
+              <Box
                 sx={{
-                  userSelect: "none",
-                  flexDirection: "column",
-                  alignItems: "stretch",
-                  padding: 0,
+                  border: 1,
+                  borderColor: "divider",
+                  backgroundColor: "#143880ff",
+                  borderRadius: 1,
+                  overflow: "hidden",
+                  transition: "transform 0.2s ease, box-shadow 0.3s ease",
+                  "&:hover": {
+                    transform: "scale(1.02)",
+                    boxShadow: 3,
+                  },
                 }}
               >
-                {previewSrc ? (
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: 220,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "#4a90e2",
-                      Color: "#d3e1f5ff",
-                      overflow: "hidden",
-                    }}
-                  >
+                <ListItemButton
+                  selected={multiSelected?.includes(file.key)}
+                  onClick={() => {
+                    if (multiSelected !== null) {
+                      onMultiSelect(file.key);
+                    } else if (isDirectory(file)) {
+                      onCwdChange(file.key + "/");
+                    } else {
+                      window.open(
+                        `/webdav/${encodeKey(file.key)}`,
+                        "_blank",
+                        "noopener,noreferrer"
+                      );
+                    }
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    onMultiSelect(file.key);
+                  }}
+                  sx={{
+                    userSelect: "none",
+                    flexDirection: "column",
+                    alignItems: "stretch",
+                    padding: 0,
+                  }}
+                >
+                  {previewSrc ? (
                     <Box
-                      component="img"
-                      src={previewSrc}
-                      alt={extractFilename(file.key)}
                       sx={{
                         width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        display: "block",
-                        backgroundColor: "#c5d4f1ff",
+                        height: 220,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "#4a90e2",
+                        overflow: "hidden",
                       }}
+                    >
+                      <Box
+                        component="img"
+                        src={previewSrc}
+                        alt={extractFilename(file.key)}
+                        loading="lazy"
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: "block",
+                          backgroundColor: "#c5d4f1ff",
+                        }}
+                      />
+                    </Box>
+                  ) : (
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: 220,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <MimeIcon contentType={file.httpMetadata.contentType} />
+                    </Box>
+                  )}
+
+                  <Box sx={{ p: 1 }}>
+                    <ListItemText
+                      primary={extractFilename(file.key)}
+                      primaryTypographyProps={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                      secondary={
+                        <React.Fragment>
+                          <Box
+                            sx={{
+                              display: "inline-block",
+                              minWidth: "300px",
+                              marginRight: 1,
+                            }}
+                          >
+                            {new Date(file.uploaded).toLocaleString()}
+                          </Box>
+                          {!isDirectory(file) && humanReadableSize(file.size)}
+                        </React.Fragment>
+                      }
                     />
                   </Box>
-                ) : (
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: 220,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "white",
-                    }}
-                  >
-                    <MimeIcon contentType={file.httpMetadata.contentType} />
-                  </Box>
-                )}
-
-                <Box sx={{ p: 1 }}>
-                  <ListItemText
-                    primary={extractFilename(file.key)}
-                    primaryTypographyProps={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    secondary={
-                      <React.Fragment>
-                        <Box
-                          sx={{
-                            display: "inline-block",
-                            minWidth: "300px",
-                            marginRight: 1,
-                          }}
-                        >
-                          {new Date(file.uploaded).toLocaleString()}
-                        </Box>
-                        {!isDirectory(file) && humanReadableSize(file.size)}
-                      </React.Fragment>
-                    }
-                  />
-                </Box>
-              </ListItemButton>
-            </Box>
-          </Grid>
-        );
-      })}
-    </Grid>
+                </ListItemButton>
+              </Box>
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Box>
   );
 }
 

@@ -73,6 +73,7 @@ function FileGrid({
               sx={{
                 border: 1,
                 borderColor: "divider",
+                backgroundColor: "#143880ff",
                 borderRadius: 1,
                 overflow: "hidden",
               }}

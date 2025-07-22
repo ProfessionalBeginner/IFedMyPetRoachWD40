@@ -55,7 +55,7 @@ function FileGrid({
       spacing={2}
       sx={{
         paddingBottom: "48px",
-        backgroundColor: "#77867e",
+        backgroundColor: "#081135",
         minHeight: "100vh",
       }}
     >

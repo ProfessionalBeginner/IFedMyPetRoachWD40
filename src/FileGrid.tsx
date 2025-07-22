@@ -55,7 +55,7 @@ function FileGrid({
       spacing={2}
       sx={{
         paddingBottom: "48px",
-        backgroundColor: "#e3f2fd",
+        backgroundColor: "#77867e",
         minHeight: "100vh",
       }}
     >
@@ -72,8 +72,8 @@ function FileGrid({
             <Box
               sx={{
                 border: 1,
-                borderColor: "divider",
-                backgroundColor: "#143880ff",
+                borderColor: "#54c0cb",
+                backgroundColor: "#77867e",
                 borderRadius: 1,
                 overflow: "hidden",
               }}

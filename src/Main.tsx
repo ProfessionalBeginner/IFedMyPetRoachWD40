@@ -213,6 +213,7 @@ function Main({
               bottom: 90,
               right: 24,
               zIndex: 999,
+              backgroundColor: "#4a90e2",
             }}
             onClick={() => setShowTextPadDrawer(true)}
           >

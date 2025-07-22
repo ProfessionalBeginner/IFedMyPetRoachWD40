@@ -113,7 +113,8 @@ function FileGrid({
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      backgroundColor: "#143880ff",
+                      backgroundColor: "#345597ff",
+                      textColor: "#d3e1f5ff",
                       overflow: "hidden",
                     }}
                   >

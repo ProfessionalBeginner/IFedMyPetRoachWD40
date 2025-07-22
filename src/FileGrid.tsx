@@ -3,11 +3,12 @@ import {
   Box,
   Grid,
   ListItemButton,
+  // ListItemIcon,
   ListItemText,
-  Typography,
 } from "@mui/material";
 import MimeIcon from "./MimeIcon";
 import { humanReadableSize } from "./app/utils";
+import RomanticIcon from "./RomanticIcon";
 
 export interface FileItem {
   key: string;
@@ -49,152 +50,133 @@ function FileGrid({
   return files.length === 0 ? (
     emptyMessage
   ) : (
-    <Box
+    <Grid
+      container
+      spacing={2}
       sx={{
-        maxHeight: "100vh",
-        overflowY: "auto",
-        scrollBehavior: "smooth",
-        backgroundColor: "#0a0e1a",
-        p: 2,
-        fontFamily: '"Share Tech Mono", monospace',
-        color: "#8be9fd",
+        paddingBottom: "48px",
+        backgroundColor: "#e3f2fd",
+        minHeight: "100vh",
       }}
     >
-      <Grid container spacing={2}>
-        {files.map((file) => {
-          const isImg = isImage(file.httpMetadata.contentType);
-          const previewSrc = file.customMetadata?.thumbnail
-            ? `/webdav/_$flaredrive$/thumbnails/${file.customMetadata.thumbnail}.png`
-            : isImg
-            ? `/webdav/${encodeKey(file.key)}`
-            : null;
+      {files.map((file) => {
+        const isImg = isImage(file.httpMetadata.contentType);
+        const previewSrc = file.customMetadata?.thumbnail
+          ? `/webdav/_$flaredrive$/thumbnails/${file.customMetadata.thumbnail}.png`
+          : isImg
+          ? `/webdav/${encodeKey(file.key)}`
+          : null;
 
-          return (
-            <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
-              <Box
+        return (
+          <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
+            <Box
+              sx={{
+                border: 1,
+                borderColor: "divider",
+                backgroundColor: "#143880ff",
+                borderRadius: 1,
+                overflow: "hidden",
+              }}
+            >
+              <ListItemButton
+                selected={multiSelected?.includes(file.key)}
+                onClick={() => {
+                  if (multiSelected !== null) {
+                    onMultiSelect(file.key);
+                  } else if (isDirectory(file)) {
+                    onCwdChange(file.key + "/");
+                  } else {
+                    window.open(
+                      `/webdav/${encodeKey(file.key)}`,
+                      "_blank",
+                      "noopener,noreferrer"
+                    );
+                  }
+                  <RomanticIcon />;
+                }}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  onMultiSelect(file.key);
+                }}
                 sx={{
-                  border: "1px solid #00caff",
-                  background: "linear-gradient(to bottom, #0e1a2b, #08111f)",
-                  borderRadius: "8px",
-                  boxShadow: "0 0 12px #00e5ff66",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  "&:hover": {
-                    transform: "scale(1.02)",
-                    boxShadow: "0 0 18px #00ffffaa",
-                  },
-                  overflow: "hidden",
+                  userSelect: "none",
+                  flexDirection: "column",
+                  alignItems: "stretch",
+                  padding: 0,
                 }}
               >
-                <ListItemButton
-                  selected={multiSelected?.includes(file.key)}
-                  onClick={() => {
-                    if (multiSelected !== null) {
-                      onMultiSelect(file.key);
-                    } else if (isDirectory(file)) {
-                      onCwdChange(file.key + "/");
-                    } else {
-                      window.open(
-                        `/webdav/${encodeKey(file.key)}`,
-                        "_blank",
-                        "noopener,noreferrer"
-                      );
-                    }
-                  }}
-                  onContextMenu={(e) => {
-                    e.preventDefault();
-                    onMultiSelect(file.key);
-                  }}
-                  sx={{
-                    userSelect: "none",
-                    flexDirection: "column",
-                    alignItems: "stretch",
-                    padding: 0,
-                  }}
-                >
-                  {previewSrc ? (
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: 200,
-                        backgroundColor: "#06101a",
-                        overflow: "hidden",
-                        position: "relative",
-                      }}
-                    >
-                      <Box
-                        component="img"
-                        src={previewSrc}
-                        alt={extractFilename(file.key)}
-                        loading="lazy"
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          filter: "brightness(0.8) contrast(1.1)",
-                        }}
-                      />
-                    </Box>
-                  ) : (
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: 200,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        background: "#07111e",
-                      }}
-                    >
-                      <MimeIcon
-                        contentType={file.httpMetadata.contentType}
-                        sx={{
-                          fontSize: 48,
-                          color: "#00eaff",
-                          filter: "drop-shadow(0 0 4px #00eaff88)",
-                        }}
-                      />
-                    </Box>
-                  )}
-
+                {previewSrc ? (
                   <Box
                     sx={{
-                      px: 1,
-                      py: 1.5,
-                      textAlign: "center",
-                      borderTop: "1px solid #00caff44",
-                      backgroundColor: "#0e1a2b",
+                      width: "100%",
+                      height: 220,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textColor: "#d3e1f5ff",
+                      backgroundColor: "#4a90e2",
+                      color: "#d3e1f5ff",
+                      overflow: "hidden",
                     }}
                   >
-                    <Typography
-                      noWrap
+                    <Box
+                      component="img"
+                      src={previewSrc}
+                      alt={extractFilename(file.key)}
                       sx={{
-                        fontSize: "0.9rem",
-                        color: "#8be9fd",
-                        textShadow: "0 0 4px #00eaff55",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                        backgroundColor: "#c5d4f1ff",
                       }}
-                    >
-                      {extractFilename(file.key)}
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        color: "#44e0ffaa",
-                        fontSize: "0.75rem",
-                      }}
-                    >
-                      {new Date(file.uploaded).toLocaleString()}
-                      {!isDirectory(file)
-                        ? ` • ${humanReadableSize(file.size)}`
-                        : ""}
-                    </Typography>
+                    />
                   </Box>
-                </ListItemButton>
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: 220,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "white",
+                    }}
+                  >
+                    <MimeIcon contentType={file.httpMetadata.contentType} />
+                  </Box>
+                )}
+
+                <Box sx={{ p: 1 }}>
+                  <ListItemText
+                    primary={extractFilename(file.key)}
+                    primaryTypographyProps={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    secondary={
+                      <React.Fragment>
+                        <Box
+                          sx={{
+                            display: "inline-block",
+                            minWidth: "300px",
+                            marginRight: 1,
+                          }}
+                        >
+                          {new Date(file.uploaded).toLocaleString()}
+                        </Box>
+                        {!isDirectory(file) && humanReadableSize(file.size)}
+                      </React.Fragment>
+                    }
+                  />
+                </Box>
+              </ListItemButton>
+            </Box>
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 }
 

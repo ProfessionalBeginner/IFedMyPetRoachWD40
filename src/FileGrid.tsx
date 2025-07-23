@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Grid,
-  ListItemButton,
-  // ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Box, Grid, ListItemButton, ListItemText } from "@mui/material";
 import MimeIcon from "./MimeIcon";
 import { humanReadableSize } from "./app/utils";
 
@@ -53,11 +47,10 @@ function FileGrid({
       container
       spacing={2}
       sx={{
-        paddingBottom: "48px",
-        paddingSide: "24px",
-        backgroundColor: "#253a8dff",
+        padding: 3,
+        backgroundColor: "#0b0f1a",
         minHeight: "100vh",
-        fontFamily: "Star Wars, consolas, monospace",
+        fontFamily: "'Orbitron', monospace",
       }}
     >
       {files.map((file) => {
@@ -72,13 +65,15 @@ function FileGrid({
           <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box
               sx={{
-                border: 3,
-                borderColor: "#54c0cb",
-                borderStyle: "dashed",
-                backgroundColor: "#293c8aff",
-                color: "#54c0cb",
-                borderRadius: 0,
-                overflow: "hidden",
+                border: "2px dashed #00ffe7",
+                borderRadius: "8px",
+                boxShadow: "0 0 10px #00ffe7",
+                backgroundColor: "#101526",
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.02)",
+                  boxShadow: "0 0 20px #00ffe7",
+                },
               }}
             >
               <ListItemButton
@@ -115,8 +110,7 @@ function FileGrid({
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      backgroundColor: "#4a90e2",
-                      color: "#54c0cb",
+                      backgroundColor: "#18233a",
                       overflow: "hidden",
                     }}
                   >
@@ -129,17 +123,19 @@ function FileGrid({
                         height: "100%",
                         objectFit: "cover",
                         display: "block",
-                        backgroundColor: "#c5d4f1ff",
+                        filter: "contrast(1.2) brightness(1.1)",
                       }}
                     />
                   </Box>
                 ) : (
                   <Box
                     sx={{
-                      display: "inline-block",
-                      minWidth: "300px",
-                      marginRight: 1,
-                      fontFamily: "'Star Wars', consolas, monospace",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: 220,
+                      backgroundColor: "#141a29",
+                      color: "#00ffe7",
                     }}
                   >
                     <MimeIcon contentType={file.httpMetadata.contentType} />
@@ -153,19 +149,30 @@ function FileGrid({
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
+                      color: "#00ffe7",
+                      fontSize: "0.85rem",
+                      fontWeight: 600,
                     }}
                     secondary={
                       <React.Fragment>
                         <Box
                           sx={{
                             display: "inline-block",
-                            minWidth: "300px",
                             marginRight: 1,
+                            fontSize: "0.75rem",
+                            color: "#87fff7",
                           }}
                         >
                           {new Date(file.uploaded).toLocaleString()}
                         </Box>
-                        {!isDirectory(file) && humanReadableSize(file.size)}
+                        {!isDirectory(file) && (
+                          <Box
+                            component="span"
+                            sx={{ fontSize: "0.75rem", color: "#38f9d7" }}
+                          >
+                            {" — " + humanReadableSize(file.size)}
+                          </Box>
+                        )}
                       </React.Fragment>
                     }
                   />

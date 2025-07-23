@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import MimeIcon from "./MimeIcon";
 import { humanReadableSize } from "./app/utils";
-import RomanticIcon from "./RomanticIcon";
 
 export interface FileItem {
   key: string;

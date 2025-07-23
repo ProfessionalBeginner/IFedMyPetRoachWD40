@@ -54,8 +54,10 @@ function FileGrid({
       spacing={2}
       sx={{
         paddingBottom: "48px",
-        backgroundColor: "#081135",
+        paddingSide: "24px",
+        backgroundColor: "#253a8dff",
         minHeight: "100vh",
+        fontFamily: "Star Wars",
       }}
     >
       {files.map((file) => {
@@ -70,11 +72,11 @@ function FileGrid({
           <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box
               sx={{
-                border: 1,
+                border: 5,
                 borderColor: "#54c0cb",
-                backgroundColor: "#081135",
+                backgroundColor: "#293c8aff",
                 color: "#54c0cb",
-                borderRadius: 4,
+                borderRadius: 0,
                 overflow: "hidden",
               }}
             >

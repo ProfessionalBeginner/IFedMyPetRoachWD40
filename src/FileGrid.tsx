@@ -48,7 +48,7 @@ function FileGrid({
       spacing={2}
       sx={{
         padding: 3,
-        backgroundColor: "#0b0f1a",
+        backgroundColor: "#293350ff",
         minHeight: "100vh",
         fontFamily: "'Orbitron', monospace",
       }}
@@ -65,14 +65,14 @@ function FileGrid({
           <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box
               sx={{
-                border: "2px dashed #00ffe7",
-                borderRadius: "8px",
-                boxShadow: "0 0 10px #00ffe7",
+                border: "2px dashed #419df3ff",
+                borderRadius: "2px",
+                boxShadow: "0 0 10px #419df3ff",
                 backgroundColor: "#101526",
                 transition: "transform 0.2s ease-in-out",
                 "&:hover": {
                   transform: "scale(1.02)",
-                  boxShadow: "0 0 20px #00ffe7",
+                  boxShadow: "0 0 20px #419df3ff",
                 },
               }}
             >
@@ -110,7 +110,7 @@ function FileGrid({
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      backgroundColor: "#18233a",
+                      backgroundColor: "#101526",
                       overflow: "hidden",
                     }}
                   >
@@ -134,8 +134,8 @@ function FileGrid({
                       alignItems: "center",
                       justifyContent: "center",
                       height: 220,
-                      backgroundColor: "#141a29",
-                      color: "#00ffe7",
+                      backgroundColor: "#101526",
+                      color: "#419df3ff",
                     }}
                   >
                     <MimeIcon contentType={file.httpMetadata.contentType} />
@@ -149,7 +149,7 @@ function FileGrid({
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      color: "#00ffe7",
+                      color: "#419df3ff",
                       fontSize: "0.85rem",
                       fontWeight: 600,
                     }}
@@ -160,7 +160,7 @@ function FileGrid({
                             display: "inline-block",
                             marginRight: 1,
                             fontSize: "0.75rem",
-                            color: "#87fff7",
+                            color: "#419df3ff",
                           }}
                         >
                           {new Date(file.uploaded).toLocaleString()}
@@ -168,7 +168,7 @@ function FileGrid({
                         {!isDirectory(file) && (
                           <Box
                             component="span"
-                            sx={{ fontSize: "0.75rem", color: "#38f9d7" }}
+                            sx={{ fontSize: "0.75rem", color: "#419df3ff" }}
                           >
                             {" — " + humanReadableSize(file.size)}
                           </Box>

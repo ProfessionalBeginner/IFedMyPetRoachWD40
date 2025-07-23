@@ -57,7 +57,7 @@ function FileGrid({
         paddingSide: "24px",
         backgroundColor: "#253a8dff",
         minHeight: "100vh",
-        fontFamily: "Star Wars",
+        fontFamily: "Star Wars, consolas, monospace",
       }}
     >
       {files.map((file) => {
@@ -138,7 +138,7 @@ function FileGrid({
                       display: "inline-block",
                       minWidth: "300px",
                       marginRight: 1,
-                      fontFamily: "'Star Wars', sans-serif",
+                      fontFamily: "'Star Wars', consolas, monospace",
                     }}
                   >
                     <MimeIcon contentType={file.httpMetadata.contentType} />

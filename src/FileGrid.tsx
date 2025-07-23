@@ -72,8 +72,9 @@ function FileGrid({
           <Grid item key={file.key} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Box
               sx={{
-                border: 5,
+                border: 3,
                 borderColor: "#54c0cb",
+                borderStyle: "dashed",
                 backgroundColor: "#293c8aff",
                 color: "#54c0cb",
                 borderRadius: 0,

@@ -135,12 +135,10 @@ function FileGrid({
                 ) : (
                   <Box
                     sx={{
-                      width: "100%",
-                      height: 220,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "white",
+                      display: "inline-block",
+                      minWidth: "300px",
+                      marginRight: 1,
+                      fontFamily: "'Star Wars', sans-serif",
                     }}
                   >
                     <MimeIcon contentType={file.httpMetadata.contentType} />

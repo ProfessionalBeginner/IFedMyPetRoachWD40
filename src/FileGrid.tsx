@@ -75,8 +75,7 @@ function FileGrid({
                 borderColor: "#54c0cb",
                 backgroundColor: "#081135",
                 color: "#54c0cb",
-                FontFace: "Roboto, sans-serif",
-                borderRadius: 1,
+                borderRadius: 4,
                 overflow: "hidden",
               }}
             >
@@ -94,7 +93,6 @@ function FileGrid({
                       "noopener,noreferrer"
                     );
                   }
-                  <RomanticIcon />;
                 }}
                 onContextMenu={(e) => {
                   e.preventDefault();
@@ -115,7 +113,6 @@ function FileGrid({
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      textColor: "#54c0cb",
                       backgroundColor: "#4a90e2",
                       color: "#54c0cb",
                       overflow: "hidden",
